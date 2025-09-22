@@ -1,6 +1,0 @@
-{"fight_id": "2025-09-22T15-51-25Z_85455", "meta": {"boss": "Cagney Carnation", "loadout": "Test Loadout", "difficulty": "Regular", "start_utc": "2025-09-22T15:51:25.455726+00:00"}}
-{"fight_id": "2025-09-22T15-51-25Z_85455", "event": "keydown", "key": "a", "t_ms": 0}
-{"fight_id": "2025-09-22T15-51-25Z_85455", "event": "keyup", "key": "a", "t_ms": 100}
-{"fight_id": "2025-09-22T15-51-25Z_85455", "event": "keydown", "key": "Key.space", "t_ms": 200}
-{"fight_id": "2025-09-22T15-51-25Z_85455", "event": "keyup", "key": "Key.space", "t_ms": 300}
-{"fight_id": "2025-09-22T15-51-25Z_85455", "summary": {"outcome": "win", "duration_ms": 300, "end_utc": "2025-09-22T15:51:25.756285+00:00"}}

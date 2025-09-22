@@ -1,2 +1,4 @@
 fight_id,boss,loadout,difficulty,outcome,duration_s,n_events,recorded_utc
-2025-09-22T15-51-25Z_85455,Cagney Carnation,Test Loadout,Regular,win,0.3,4,2025-09-22T15:51:25.756285+00:00
+2025-09-22T15-55-48Z_48457,Grim Matchstick,Spreadshot + Smoke Bomb,Regular,win,3.002,20,2025-09-22T15:55:51.460194+00:00
+2025-09-22T15-55-51Z_51462,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,1.5,10,2025-09-22T15:55:52.963697+00:00
+2025-09-22T15-55-52Z_52964,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,1.5,10,2025-09-22T15:55:54.464949+00:00

@@ -179,6 +179,7 @@ class DataLogger:
                     'fight_id', 'boss', 'loadout', 'difficulty', 
                     'outcome', 'duration_s', 'n_events', 'recorded_utc'
                 ])
+                f.flush()  # Ensure header is written
             
             writer.writerow([
                 self.current_session.fight_id,

@@ -136,12 +136,32 @@ qa:
 
 ## Testing
 
-Run the core functionality test:
+### Headless Testing (Core Functionality)
+Run comprehensive testing without requiring a display:
 ```bash
-python test_core.py
+python test_headless.py
 ```
 
-This verifies data logging, file creation, and output formats.
+This simulates complete fight sessions and verifies:
+- Data logging and file creation
+- JSONL and CSV output formats
+- Multiple sequential fights
+- Error handling
+
+### Component Testing
+Test individual components:
+```bash
+python test_components.py  # May fail in headless environments
+python test_core.py        # Basic data logger test
+```
+
+### Data Analysis
+Analyze collected fight data:
+```bash
+python analyze_data.py summary    # Analyze fight summaries
+python analyze_data.py events     # Analyze all event logs
+python analyze_data.py events <fight_id>  # Analyze specific fight
+```
 
 ## File Structure
 
