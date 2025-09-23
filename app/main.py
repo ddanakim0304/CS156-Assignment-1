@@ -6,6 +6,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import threading
 import time
+import csv
 from pathlib import Path
 from enum import Enum
 
@@ -25,7 +26,7 @@ class CupheadLoggerUI:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Cuphead Boss Keystroke Logger")
-        self.root.geometry("400x300")
+        self.root.geometry("400x450")  # Increased height for session list
         self.root.resizable(False, False)
         
         # Make window always on top
@@ -38,6 +39,9 @@ class CupheadLoggerUI:
         
         # UI update thread control
         self.update_thread_running = False
+        
+        # Session history for display
+        self.session_history = []
         
         # Create UI elements
         self._create_widgets()
@@ -88,6 +92,9 @@ class CupheadLoggerUI:
         self.win_btn = ttk.Button(button_frame, text="Win (F9)", command=self._mark_win)
         self.win_btn.grid(row=1, column=1, padx=2, pady=2)
         
+        self.delete_btn = ttk.Button(button_frame, text="Delete Last", command=self._delete_last_session)
+        self.delete_btn.grid(row=2, column=0, columnspan=2, padx=2, pady=2)
+        
         # Status display
         self.status_var = tk.StringVar(value="Idle")
         self.status_label = ttk.Label(main_frame, textvariable=self.status_var, foreground="blue")
@@ -108,12 +115,36 @@ class CupheadLoggerUI:
         self.pin_check = ttk.Checkbutton(main_frame, text="Pin on top", variable=self.pin_var, command=self._toggle_pin)
         self.pin_check.grid(row=6, column=0, columnspan=3, pady=5)
         
+        # Session history
+        history_frame = ttk.LabelFrame(main_frame, text="Recent Sessions (Last 5)", padding="5")
+        history_frame.grid(row=7, column=0, columnspan=3, pady=5, sticky=(tk.W, tk.E, tk.N, tk.S))
+        
+        # Create Treeview for session history
+        self.history_tree = ttk.Treeview(history_frame, columns=('outcome', 'duration', 'events'), show='headings', height=5)
+        self.history_tree.heading('#1', text='Outcome')
+        self.history_tree.heading('#2', text='Duration')
+        self.history_tree.heading('#3', text='Events')
+        
+        # Configure column widths
+        self.history_tree.column('#1', width=80, anchor='center')
+        self.history_tree.column('#2', width=80, anchor='center')
+        self.history_tree.column('#3', width=60, anchor='center')
+        
+        # Add scrollbar for history
+        history_scrollbar = ttk.Scrollbar(history_frame, orient="vertical", command=self.history_tree.yview)
+        self.history_tree.configure(yscrollcommand=history_scrollbar.set)
+        
+        self.history_tree.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        history_scrollbar.grid(row=0, column=1, sticky=(tk.N, tk.S))
+        
         # Configure grid weights
         main_frame.columnconfigure(1, weight=1)
+        main_frame.rowconfigure(7, weight=1)  # Make history frame expandable
         button_frame.columnconfigure(0, weight=1)
         button_frame.columnconfigure(1, weight=1)
         telemetry_frame.columnconfigure(0, weight=1)
         telemetry_frame.columnconfigure(1, weight=1)
+        history_frame.columnconfigure(0, weight=1)
         
     def _setup_keyboard_listener(self):
         """Setup global keyboard listener with hotkey callbacks"""
@@ -138,7 +169,7 @@ class CupheadLoggerUI:
     def _start_fight(self):
         """Start a new fight session"""
         if self.state != AppState.IDLE:
-            messagebox.showwarning("Warning", "End current fight first!")
+            self.status_var.set("Warning: End current fight first!")
             return
             
         try:
@@ -153,7 +184,8 @@ class CupheadLoggerUI:
             print(f"Started fight: {fight_id}")
             
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to start fight: {e}")
+            self.status_var.set(f"Error starting fight: {str(e)}")
+            print(f"Error starting fight: {e}")
             
     def _end_fight(self):
         """End the current fight session"""
@@ -185,18 +217,30 @@ class CupheadLoggerUI:
             self.state = AppState.IDLE
             self._update_ui_state()
             
-            # Show completion message
+            # Add to session history
             duration = session_data['duration_s']
             events = session_data['n_events']
             fight_id = session_data['fight_id']
+            boss = session_data.get('boss', 'Unknown')
             
-            message = f"Fight completed!\nOutcome: {outcome.upper()}\nDuration: {duration:.1f}s\nEvents: {events}\nFight ID: {fight_id}"
-            messagebox.showinfo("Fight Completed", message)
+            # Create session entry
+            session_entry = {
+                'fight_id': fight_id,
+                'boss': boss,
+                'outcome': outcome.upper(),
+                'duration': f"{duration:.1f}s",
+                'events': str(events),
+                'timestamp': time.strftime("%H:%M:%S")
+            }
+            
+            self._add_to_history(session_entry)
             
             print(f"Completed fight {fight_id}: {outcome} ({duration:.1f}s, {events} events)")
             
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to complete fight: {e}")
+            # Show error in status instead of popup
+            self.status_var.set(f"Error: {str(e)}")
+            print(f"Error completing fight: {e}")
             self.state = AppState.IDLE
             self._update_ui_state()
             
@@ -207,6 +251,7 @@ class CupheadLoggerUI:
             self.end_btn.config(state="disabled")
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
+            self.delete_btn.config(state="normal" if self.session_history else "disabled")
             self.status_var.set("Idle")
             self.events_var.set("Events: 0")
             self.elapsed_var.set("Elapsed: 00:00")
@@ -216,6 +261,7 @@ class CupheadLoggerUI:
             self.end_btn.config(state="normal")
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
+            self.delete_btn.config(state="disabled")
             
             session_info = self.data_logger.get_session_info()
             if session_info:
@@ -228,6 +274,7 @@ class CupheadLoggerUI:
             self.end_btn.config(state="disabled")
             self.lose_btn.config(state="normal")
             self.win_btn.config(state="normal")
+            self.delete_btn.config(state="disabled")
             self.status_var.set("Fight ended. Mark outcome.")
             
     def _update_telemetry(self):
@@ -247,6 +294,105 @@ class CupheadLoggerUI:
     def _toggle_pin(self):
         """Toggle always-on-top behavior"""
         self.root.attributes('-topmost', self.pin_var.get())
+        
+    def _add_to_history(self, session_entry):
+        """Add a session to the history list and update the display"""
+        # Add to beginning of list
+        self.session_history.insert(0, session_entry)
+        
+        # Keep only last 5 sessions
+        if len(self.session_history) > 5:
+            self.session_history = self.session_history[:5]
+            
+        # Update the treeview
+        self._update_history_display()
+        
+    def _update_history_display(self):
+        """Update the history treeview with current session data"""
+        # Clear existing items
+        for item in self.history_tree.get_children():
+            self.history_tree.delete(item)
+            
+        # Add sessions to treeview
+        for session in self.session_history:
+            # Create display text with boss and timestamp
+            display_text = f"{session['boss']} ({session['timestamp']})"
+            
+            # Set tag for coloring based on outcome
+            tag = 'win' if session['outcome'] == 'WIN' else 'lose' if session['outcome'] == 'LOSE' else 'other'
+            
+            self.history_tree.insert('', 'end', 
+                                   text=display_text,
+                                   values=(session['outcome'], session['duration'], session['events']),
+                                   tags=(tag,))
+        
+        # Configure tags for coloring
+        self.history_tree.tag_configure('win', foreground='green')
+        self.history_tree.tag_configure('lose', foreground='red')
+        self.history_tree.tag_configure('other', foreground='orange')
+        
+    def _delete_last_session(self):
+        """Delete the most recent session from both UI and data files"""
+        if not self.session_history:
+            self.status_var.set("No sessions to delete")
+            return
+            
+        if self.state != AppState.IDLE:
+            self.status_var.set("Cannot delete while recording")
+            return
+            
+        try:
+            # Get the most recent session
+            last_session = self.session_history[0]
+            fight_id = last_session['fight_id']
+            
+            # Remove from UI history
+            self.session_history.pop(0)
+            self._update_history_display()
+            
+            # Delete the raw data file
+            raw_file = self.data_logger.raw_dir / f"{fight_id}.jsonl"
+            if raw_file.exists():
+                raw_file.unlink()
+                
+            # Remove from CSV summary
+            self._remove_from_csv_summary(fight_id)
+            
+            self.status_var.set(f"Deleted session: {fight_id}")
+            print(f"Deleted session: {fight_id}")
+            
+            # Update delete button state
+            self._update_ui_state()
+            
+        except Exception as e:
+            self.status_var.set(f"Error deleting session: {str(e)}")
+            print(f"Error deleting session: {e}")
+            
+    def _remove_from_csv_summary(self, fight_id: str):
+        """Remove a fight from the CSV summary file"""
+        import csv
+        import tempfile
+        
+        csv_path = self.data_logger.summaries_dir / "fight_summaries.csv"
+        if not csv_path.exists():
+            return
+            
+        # Read all rows except the one to delete
+        rows_to_keep = []
+        with open(csv_path, 'r', newline='') as f:
+            reader = csv.reader(f)
+            header = next(reader, None)
+            if header:
+                rows_to_keep.append(header)
+                
+            for row in reader:
+                if row and row[0] != fight_id:  # fight_id is in first column
+                    rows_to_keep.append(row)
+        
+        # Write back the filtered data
+        with open(csv_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerows(rows_to_keep)
         
     def _start_ui_updates(self):
         """Start the UI update loop"""
