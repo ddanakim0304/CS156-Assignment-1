@@ -26,8 +26,9 @@ class CupheadLoggerUI:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Cuphead Boss Keystroke Logger")
-        self.root.geometry("400x450")  # Increased height for session list
-        self.root.resizable(False, False)
+        self.root.geometry("500x600")  # Much larger window
+        self.root.resizable(True, True)  # Allow resizing
+        self.root.minsize(450, 550)  # Set minimum size
         
         # Make window always on top
         self.root.attributes('-topmost', True)
@@ -43,6 +44,9 @@ class CupheadLoggerUI:
         # Session history for display
         self.session_history = []
         
+        # Keystroke display timeout
+        self.keystroke_timeout_id = None
+        
         # Create UI elements
         self._create_widgets()
         self._setup_keyboard_listener()
@@ -53,79 +57,88 @@ class CupheadLoggerUI:
         
     def _create_widgets(self):
         """Create all UI widgets"""
-        main_frame = ttk.Frame(self.root, padding="10")
+        main_frame = ttk.Frame(self.root, padding="15")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
+        # Configure root grid weights
+        self.root.columnconfigure(0, weight=1)
+        self.root.rowconfigure(0, weight=1)
+        
         # Boss selection
-        ttk.Label(main_frame, text="Boss:").grid(row=0, column=0, sticky=tk.W, pady=2)
+        ttk.Label(main_frame, text="Boss:").grid(row=0, column=0, sticky=tk.W, pady=5)
         self.boss_var = tk.StringVar(value="Cagney Carnation")
-        self.boss_combo = ttk.Combobox(main_frame, textvariable=self.boss_var, width=25, state="readonly")
+        self.boss_combo = ttk.Combobox(main_frame, textvariable=self.boss_var, width=30, state="readonly")
         self.boss_combo['values'] = self.data_logger.config.get('bosses', [])
-        self.boss_combo.grid(row=0, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=2)
+        self.boss_combo.grid(row=0, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=5)
         
         # Loadout
-        ttk.Label(main_frame, text="Loadout:").grid(row=1, column=0, sticky=tk.W, pady=2)
+        ttk.Label(main_frame, text="Loadout:").grid(row=1, column=0, sticky=tk.W, pady=5)
         self.loadout_var = tk.StringVar(value=self.data_logger.config.get('loadout', 'Peashooter + Smoke Bomb'))
-        self.loadout_entry = ttk.Entry(main_frame, textvariable=self.loadout_var, width=25)
-        self.loadout_entry.grid(row=1, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=2)
+        self.loadout_entry = ttk.Entry(main_frame, textvariable=self.loadout_var, width=30)
+        self.loadout_entry.grid(row=1, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=5)
         
         # Difficulty
-        ttk.Label(main_frame, text="Difficulty:").grid(row=2, column=0, sticky=tk.W, pady=2)
+        ttk.Label(main_frame, text="Difficulty:").grid(row=2, column=0, sticky=tk.W, pady=5)
         self.difficulty_var = tk.StringVar(value=self.data_logger.config.get('difficulty', 'Regular'))
-        self.difficulty_combo = ttk.Combobox(main_frame, textvariable=self.difficulty_var, width=25, state="readonly")
+        self.difficulty_combo = ttk.Combobox(main_frame, textvariable=self.difficulty_var, width=30, state="readonly")
         self.difficulty_combo['values'] = ['Regular', 'Simple', 'Expert']
-        self.difficulty_combo.grid(row=2, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=2)
+        self.difficulty_combo.grid(row=2, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=5)
         
         # Control buttons
         button_frame = ttk.Frame(main_frame)
-        button_frame.grid(row=3, column=0, columnspan=3, pady=10, sticky=(tk.W, tk.E))
+        button_frame.grid(row=3, column=0, columnspan=3, pady=15, sticky=(tk.W, tk.E))
         
         self.start_btn = ttk.Button(button_frame, text="Start (F1)", command=self._toggle_fight)
-        self.start_btn.grid(row=0, column=0, columnspan=2, padx=2)
+        self.start_btn.grid(row=0, column=0, columnspan=2, padx=5, pady=5, sticky=(tk.W, tk.E))
         
         self.lose_btn = ttk.Button(button_frame, text="Lose (F8)", command=self._mark_lose)
-        self.lose_btn.grid(row=1, column=0, padx=2, pady=2)
+        self.lose_btn.grid(row=1, column=0, padx=5, pady=5, sticky=(tk.W, tk.E))
         
         self.win_btn = ttk.Button(button_frame, text="Win (F9)", command=self._mark_win)
-        self.win_btn.grid(row=1, column=1, padx=2, pady=2)
+        self.win_btn.grid(row=1, column=1, padx=5, pady=5, sticky=(tk.W, tk.E))
         
         self.delete_btn = ttk.Button(button_frame, text="Delete Selected", command=self._delete_selected_session)
-        self.delete_btn.grid(row=2, column=0, columnspan=2, padx=2, pady=2)
+        self.delete_btn.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky=(tk.W, tk.E))
         
         # Status display
         self.status_var = tk.StringVar(value="Idle")
-        self.status_label = ttk.Label(main_frame, textvariable=self.status_var, foreground="blue")
-        self.status_label.grid(row=4, column=0, columnspan=3, pady=5)
+        self.status_label = ttk.Label(main_frame, textvariable=self.status_var, foreground="blue", font=('Arial', 10, 'bold'))
+        self.status_label.grid(row=4, column=0, columnspan=3, pady=10)
         
         # Telemetry display
-        telemetry_frame = ttk.LabelFrame(main_frame, text="Session Info", padding="5")
-        telemetry_frame.grid(row=5, column=0, columnspan=3, pady=5, sticky=(tk.W, tk.E))
+        telemetry_frame = ttk.LabelFrame(main_frame, text="Session Info", padding="10")
+        telemetry_frame.grid(row=5, column=0, columnspan=3, pady=10, sticky=(tk.W, tk.E))
         
         self.events_var = tk.StringVar(value="Events: 0")
-        ttk.Label(telemetry_frame, textvariable=self.events_var).grid(row=0, column=0, sticky=tk.W)
+        ttk.Label(telemetry_frame, textvariable=self.events_var).grid(row=0, column=0, sticky=tk.W, pady=2)
         
         self.elapsed_var = tk.StringVar(value="Elapsed: 00:00")
-        ttk.Label(telemetry_frame, textvariable=self.elapsed_var).grid(row=0, column=1, sticky=tk.E)
+        ttk.Label(telemetry_frame, textvariable=self.elapsed_var).grid(row=0, column=1, sticky=tk.E, pady=2)
+        
+        # Current keystroke display
+        self.keystroke_var = tk.StringVar(value="Last Key: None")
+        self.keystroke_label = ttk.Label(telemetry_frame, textvariable=self.keystroke_var, foreground="green")
+        self.keystroke_label.grid(row=1, column=0, columnspan=2, pady=5)
         
         # Pin on top checkbox
         self.pin_var = tk.BooleanVar(value=True)
         self.pin_check = ttk.Checkbutton(main_frame, text="Pin on top", variable=self.pin_var, command=self._toggle_pin)
-        self.pin_check.grid(row=6, column=0, columnspan=3, pady=5)
+        self.pin_check.grid(row=6, column=0, columnspan=3, pady=8)
         
         # Session history
-        history_frame = ttk.LabelFrame(main_frame, text="Recent Sessions (Last 5)", padding="5")
-        history_frame.grid(row=7, column=0, columnspan=3, pady=5, sticky=(tk.W, tk.E, tk.N, tk.S))
+        history_frame = ttk.LabelFrame(main_frame, text="Recent Sessions (Last 5)", padding="8")
+        history_frame.grid(row=7, column=0, columnspan=3, pady=10, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Create Treeview for session history
-        self.history_tree = ttk.Treeview(history_frame, columns=('outcome', 'duration', 'events'), show='headings', height=5)
+        self.history_tree = ttk.Treeview(history_frame, columns=('outcome', 'duration', 'events'), show='headings', height=6)
         self.history_tree.heading('#1', text='Outcome')
         self.history_tree.heading('#2', text='Duration')
         self.history_tree.heading('#3', text='Events')
         
-        # Configure column widths
-        self.history_tree.column('#1', width=80, anchor='center')
-        self.history_tree.column('#2', width=80, anchor='center')
-        self.history_tree.column('#3', width=60, anchor='center')
+        # Configure column widths for better visibility
+        self.history_tree.column('#1', width=100, anchor='center')
+        self.history_tree.column('#2', width=100, anchor='center')
+        self.history_tree.column('#3', width=80, anchor='center')
         
         # Add scrollbar for history
         history_scrollbar = ttk.Scrollbar(history_frame, orient="vertical", command=self.history_tree.yview)
@@ -134,14 +147,19 @@ class CupheadLoggerUI:
         self.history_tree.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         history_scrollbar.grid(row=0, column=1, sticky=(tk.N, tk.S))
         
-        # Configure grid weights
+        # Configure grid weights for proper resizing
         main_frame.columnconfigure(1, weight=1)
+        main_frame.columnconfigure(2, weight=1)
         main_frame.rowconfigure(7, weight=1)  # Make history frame expandable
+        
         button_frame.columnconfigure(0, weight=1)
         button_frame.columnconfigure(1, weight=1)
+        
         telemetry_frame.columnconfigure(0, weight=1)
         telemetry_frame.columnconfigure(1, weight=1)
+        
         history_frame.columnconfigure(0, weight=1)
+        history_frame.rowconfigure(0, weight=1)
         
     def _setup_keyboard_listener(self):
         """Setup global keyboard listener with hotkey callbacks"""
@@ -161,6 +179,9 @@ class CupheadLoggerUI:
         """Handle keyboard events from the listener"""
         if self.state == AppState.RECORDING:
             self.data_logger.log_event(event_type, key)
+        
+        # Update current keystroke display
+        self._update_keystroke_display(event_type, key)
             
     def _toggle_fight(self):
         """Toggle between starting and ending a fight based on current state"""
@@ -257,6 +278,7 @@ class CupheadLoggerUI:
             self.status_var.set("Idle")
             self.events_var.set("Events: 0")
             self.elapsed_var.set("Elapsed: 00:00")
+            self.keystroke_var.set("Last Key: None")
             
         elif self.state == AppState.RECORDING:
             self.start_btn.config(state="normal", text="End (F1)")  # Button text changes to "End"
@@ -290,6 +312,49 @@ class CupheadLoggerUI:
                 
                 self.events_var.set(f"Events: {events}")
                 self.elapsed_var.set(f"Elapsed: {minutes:02d}:{seconds:02d}")
+    
+    def _update_keystroke_display(self, event_type: str, key: str):
+        """Update the current keystroke display"""
+        # Cancel any existing timeout
+        if self.keystroke_timeout_id:
+            self.root.after_cancel(self.keystroke_timeout_id)
+        
+        # Create a readable key name
+        readable_key = self._format_key_name(key)
+        
+        # Show different colors for press vs release
+        if event_type == "keydown":
+            self.keystroke_var.set(f"Last Key: {readable_key} (PRESS)")
+            self.keystroke_label.config(foreground="red")
+        else:  # keyup
+            self.keystroke_var.set(f"Last Key: {readable_key} (RELEASE)")
+            self.keystroke_label.config(foreground="blue")
+        
+        # Set timeout to clear display after 2 seconds
+        self.keystroke_timeout_id = self.root.after(2000, self._clear_keystroke_display)
+    
+    def _format_key_name(self, key: str) -> str:
+        """Format key name for better readability"""
+        # Convert special key names to more readable format
+        key_mappings = {
+            'Key.space': 'SPACE',
+            'Key.left': 'LEFT ARROW',
+            'Key.right': 'RIGHT ARROW', 
+            'Key.up': 'UP ARROW',
+            'Key.down': 'DOWN ARROW',
+            'f': 'F (Shoot)',
+            'a': 'A (Special)',
+            'x': 'X (Lock)',
+            'd': 'D (Dash)',
+        }
+        
+        return key_mappings.get(key, key.upper())
+    
+    def _clear_keystroke_display(self):
+        """Clear the keystroke display"""
+        self.keystroke_var.set("Last Key: None")
+        self.keystroke_label.config(foreground="gray")
+        self.keystroke_timeout_id = None
                 
     def _toggle_pin(self):
         """Toggle always-on-top behavior"""
