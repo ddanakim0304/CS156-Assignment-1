@@ -10,23 +10,15 @@ from pynput.keyboard import Key
 
 class KeyboardListener:
     """Handles global keyboard event listening"""
-    
     # Keys to monitor for gameplay
     GAMEPLAY_KEYS = {
         Key.left: 'left',
         Key.right: 'right', 
-        Key.up: 'up',
-        Key.down: 'down',
-        Key.space: 'jump',  # Common jump key
-        Key.shift: 'dash',  # Common dash key
-        'z': 'shoot',       # Common shoot key
-        'x': 'special',     # Common special key
-        'c': 'lock',        # Common lock key
-        'v': 'swap',        # Common swap key
-        Key.enter: 'pause', # Common pause key
-        'a': 'shoot',       # Alternative shoot
-        's': 'jump',        # Alternative jump
-        'd': 'dash',        # Alternative dash
+        Key.space: 'jump',
+        'f': 'shoot',
+        'a': 'special',
+        'x': 'lock',
+        'd': 'dash',
     }
     
     # Hotkeys to ignore from gameplay logging
@@ -96,23 +88,28 @@ class KeyboardListener:
         if key in self.IGNORE_KEYS:
             return False
             
-        # Check if it's a monitored gameplay key
+        # Check if it's a special key (like arrows, space)
         if key in self.GAMEPLAY_KEYS:
             return True
             
         # Check character keys
         if hasattr(key, 'char') and key.char:
-            return key.char.lower() in [k for k in self.GAMEPLAY_KEYS.keys() if isinstance(k, str)]
+            char_key = key.char.lower()
+            return char_key in self.GAMEPLAY_KEYS
             
         return False
         
     def _get_gameplay_action(self, key) -> str:
         """Get the gameplay action name for a key"""
+        # Check special keys first
         if key in self.GAMEPLAY_KEYS:
             return self.GAMEPLAY_KEYS[key]
+        # Check character keys
         elif hasattr(key, 'char') and key.char:
             char_key = key.char.lower()
-            return self.GAMEPLAY_KEYS.get(char_key, char_key)
+            if char_key in self.GAMEPLAY_KEYS:
+                return self.GAMEPLAY_KEYS[char_key]
+            return char_key
         return self._normalize_key(key)
         
     def _on_key_press(self, key):
