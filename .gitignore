@@ -12,6 +12,7 @@ venv.bak/
 
 # Data files (actual logging output)
 data/summaries/
+data/raw/
 
 # IDE
 .vscode/
