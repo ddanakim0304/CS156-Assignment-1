@@ -80,11 +80,8 @@ class CupheadLoggerUI:
         button_frame = ttk.Frame(main_frame)
         button_frame.grid(row=3, column=0, columnspan=3, pady=10, sticky=(tk.W, tk.E))
         
-        self.start_btn = ttk.Button(button_frame, text="Start (F1)", command=self._start_fight)
-        self.start_btn.grid(row=0, column=0, padx=2)
-        
-        self.end_btn = ttk.Button(button_frame, text="End (F2)", command=self._end_fight)
-        self.end_btn.grid(row=0, column=1, padx=2)
+        self.start_btn = ttk.Button(button_frame, text="Start (F1)", command=self._toggle_fight)
+        self.start_btn.grid(row=0, column=0, columnspan=2, padx=2)
         
         self.lose_btn = ttk.Button(button_frame, text="Lose (F8)", command=self._mark_lose)
         self.lose_btn.grid(row=1, column=0, padx=2, pady=2)
@@ -92,7 +89,7 @@ class CupheadLoggerUI:
         self.win_btn = ttk.Button(button_frame, text="Win (F9)", command=self._mark_win)
         self.win_btn.grid(row=1, column=1, padx=2, pady=2)
         
-        self.delete_btn = ttk.Button(button_frame, text="Delete Last", command=self._delete_last_session)
+        self.delete_btn = ttk.Button(button_frame, text="Delete Selected", command=self._delete_selected_session)
         self.delete_btn.grid(row=2, column=0, columnspan=2, padx=2, pady=2)
         
         # Status display
@@ -149,8 +146,7 @@ class CupheadLoggerUI:
     def _setup_keyboard_listener(self):
         """Setup global keyboard listener with hotkey callbacks"""
         hotkey_callbacks = {
-            'start': self._start_fight,
-            'end': self._end_fight,
+            'start': self._toggle_fight,  # F1 now toggles start/end
             'lose': self._mark_lose,
             'win': self._mark_win
         }
@@ -165,6 +161,13 @@ class CupheadLoggerUI:
         """Handle keyboard events from the listener"""
         if self.state == AppState.RECORDING:
             self.data_logger.log_event(event_type, key)
+            
+    def _toggle_fight(self):
+        """Toggle between starting and ending a fight based on current state"""
+        if self.state == AppState.IDLE:
+            self._start_fight()
+        elif self.state == AppState.RECORDING:
+            self._end_fight()
             
     def _start_fight(self):
         """Start a new fight session"""
@@ -247,8 +250,7 @@ class CupheadLoggerUI:
     def _update_ui_state(self):
         """Update UI elements based on current state"""
         if self.state == AppState.IDLE:
-            self.start_btn.config(state="normal")
-            self.end_btn.config(state="disabled")
+            self.start_btn.config(state="normal", text="Start (F1)")
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
             self.delete_btn.config(state="normal")
@@ -257,8 +259,7 @@ class CupheadLoggerUI:
             self.elapsed_var.set("Elapsed: 00:00")
             
         elif self.state == AppState.RECORDING:
-            self.start_btn.config(state="disabled")
-            self.end_btn.config(state="normal")
+            self.start_btn.config(state="normal", text="End (F1)")  # Button text changes to "End"
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
             self.delete_btn.config(state="normal")
@@ -270,8 +271,7 @@ class CupheadLoggerUI:
                 self.status_var.set(f"Recording: {fight_id} — Boss: {boss}")
                 
         elif self.state == AppState.ENDED:
-            self.start_btn.config(state="disabled")
-            self.end_btn.config(state="disabled")
+            self.start_btn.config(state="disabled", text="Start (F1)")  # Reset to "Start" but disabled
             self.lose_btn.config(state="normal")
             self.win_btn.config(state="normal")
             self.delete_btn.config(state="normal")
@@ -318,8 +318,15 @@ class CupheadLoggerUI:
             # Create display text with boss and timestamp
             display_text = f"{session['boss']} ({session['timestamp']})"
             
-            # Set tag for coloring based on outcome
-            tag = 'win' if session['outcome'] == 'WIN' else 'lose' if session['outcome'] == 'LOSE' else 'other'
+            # Parse duration to check for anomalies
+            duration_str = session['duration']
+            duration_value = float(duration_str.replace('s', ''))
+            
+            # Set tag for coloring based on duration anomalies
+            if duration_value < 10 or duration_value > 150:
+                tag = 'anomaly'  # Red for anomalous durations
+            else:
+                tag = 'normal'   # Normal color for regular durations
             
             self.history_tree.insert('', 'end', 
                                    text=display_text,
@@ -327,14 +334,15 @@ class CupheadLoggerUI:
                                    tags=(tag,))
         
         # Configure tags for coloring
-        self.history_tree.tag_configure('win', foreground='green')
-        self.history_tree.tag_configure('lose', foreground='red')
-        self.history_tree.tag_configure('other', foreground='orange')
+        self.history_tree.tag_configure('anomaly', foreground='red')
+        self.history_tree.tag_configure('normal', foreground='black')
         
-    def _delete_last_session(self):
-        """Delete the most recent session from both UI and data files"""
-        if not self.session_history:
-            self.status_var.set("No sessions to delete")
+    def _delete_selected_session(self):
+        """Delete the selected session from both UI and data files"""
+        # Get selected item from treeview
+        selected_items = self.history_tree.selection()
+        if not selected_items:
+            self.status_var.set("No session selected to delete")
             return
             
         if self.state != AppState.IDLE:
@@ -342,12 +350,20 @@ class CupheadLoggerUI:
             return
             
         try:
-            # Get the most recent session
-            last_session = self.session_history[0]
-            fight_id = last_session['fight_id']
+            # Get the selected item
+            selected_item = selected_items[0]
+            item_index = self.history_tree.index(selected_item)
+            
+            # Get the corresponding session from our history
+            if item_index >= len(self.session_history):
+                self.status_var.set("Invalid selection")
+                return
+                
+            selected_session = self.session_history[item_index]
+            fight_id = selected_session['fight_id']
             
             # Remove from UI history
-            self.session_history.pop(0)
+            self.session_history.pop(item_index)
             self._update_history_display()
             
             # Delete the raw data file
