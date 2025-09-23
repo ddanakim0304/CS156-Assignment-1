@@ -12,7 +12,7 @@ venv.bak/
 
 # Data files (actual logging output)
 data/raw/*.jsonl
-data/summaries/*.csv
+data/summaries/
 
 # IDE
 .vscode/
@@ -34,3 +34,4 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+data/summaries/fight_summaries.csv
