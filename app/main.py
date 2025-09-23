@@ -50,6 +50,7 @@ class CupheadLoggerUI:
         # Create UI elements
         self._create_widgets()
         self._setup_keyboard_listener()
+        self._load_existing_sessions()  # Load existing sessions from CSV
         self._update_ui_state()
         
         # Start UI update loop
@@ -355,6 +356,40 @@ class CupheadLoggerUI:
         self.keystroke_var.set("Last Key: None")
         self.keystroke_label.config(foreground="gray")
         self.keystroke_timeout_id = None
+    
+    def _load_existing_sessions(self):
+        """Load existing sessions from CSV file to populate the history"""
+        csv_path = self.data_logger.summaries_dir / "fight_summaries.csv"
+        if not csv_path.exists():
+            return
+        
+        try:
+            sessions = []
+            with open(csv_path, 'r', newline='') as f:
+                reader = csv.DictReader(f)
+                # Get the last 5 sessions (most recent)
+                all_sessions = list(reader)
+                recent_sessions = all_sessions[-5:] if len(all_sessions) > 5 else all_sessions
+                
+                for row in recent_sessions:
+                    session_entry = {
+                        'fight_id': row['fight_id'],
+                        'boss': row['boss'],
+                        'outcome': row['outcome'].upper(),
+                        'duration': f"{float(row['duration_s']):.1f}s",
+                        'events': row['n_events'],
+                        'timestamp': 'Loaded'  # Mark as loaded from file
+                    }
+                    sessions.append(session_entry)
+            
+            # Reverse to show most recent first
+            self.session_history = list(reversed(sessions))
+            self._update_history_display()
+            print(f"Loaded {len(self.session_history)} existing sessions from CSV")
+            
+        except Exception as e:
+            print(f"Error loading existing sessions: {e}")
+            # Don't show error to user, just continue without loaded sessions
                 
     def _toggle_pin(self):
         """Toggle always-on-top behavior"""
@@ -427,53 +462,81 @@ class CupheadLoggerUI:
             selected_session = self.session_history[item_index]
             fight_id = selected_session['fight_id']
             
+            print(f"Attempting to delete session: {fight_id}")
+            
+            # Delete the raw data file
+            raw_file = self.data_logger.raw_dir / f"{fight_id}.jsonl"
+            print(f"Looking for raw file: {raw_file}")
+            
+            if raw_file.exists():
+                raw_file.unlink()
+                print(f"Deleted raw file: {raw_file}")
+            else:
+                print(f"Raw file not found: {raw_file}")
+                
+            # Remove from CSV summary
+            csv_removed = self._remove_from_csv_summary(fight_id)
+            
             # Remove from UI history
             self.session_history.pop(item_index)
             self._update_history_display()
             
-            # Delete the raw data file
-            raw_file = self.data_logger.raw_dir / f"{fight_id}.jsonl"
-            if raw_file.exists():
-                raw_file.unlink()
-                
-            # Remove from CSV summary
-            self._remove_from_csv_summary(fight_id)
+            if csv_removed:
+                self.status_var.set(f"Deleted session: {fight_id}")
+            else:
+                self.status_var.set(f"Partially deleted: {fight_id} (CSV entry not found)")
             
-            self.status_var.set(f"Deleted session: {fight_id}")
-            print(f"Deleted session: {fight_id}")
-            
-            # Update delete button state
-            self._update_ui_state()
+            print(f"Successfully processed deletion for: {fight_id}")
             
         except Exception as e:
             self.status_var.set(f"Error deleting session: {str(e)}")
             print(f"Error deleting session: {e}")
+            import traceback
+            traceback.print_exc()
             
-    def _remove_from_csv_summary(self, fight_id: str):
-        """Remove a fight from the CSV summary file"""
-        import csv
-        import tempfile
-        
+    def _remove_from_csv_summary(self, fight_id: str) -> bool:
+        """Remove a fight from the CSV summary file. Returns True if entry was found and removed."""
         csv_path = self.data_logger.summaries_dir / "fight_summaries.csv"
         if not csv_path.exists():
-            return
+            print(f"CSV file not found: {csv_path}")
+            return False
             
-        # Read all rows except the one to delete
-        rows_to_keep = []
-        with open(csv_path, 'r', newline='') as f:
-            reader = csv.reader(f)
-            header = next(reader, None)
-            if header:
-                rows_to_keep.append(header)
-                
-            for row in reader:
-                if row and row[0] != fight_id:  # fight_id is in first column
-                    rows_to_keep.append(row)
-        
-        # Write back the filtered data
-        with open(csv_path, 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerows(rows_to_keep)
+        try:
+            # Read all rows except the one to delete
+            rows_to_keep = []
+            entry_found = False
+            
+            with open(csv_path, 'r', newline='') as f:
+                reader = csv.reader(f)
+                header = next(reader, None)
+                if header:
+                    rows_to_keep.append(header)
+                    
+                for row in reader:
+                    if row and len(row) > 0:
+                        if row[0] == fight_id:  # fight_id is in first column
+                            entry_found = True
+                            print(f"Found CSV entry for fight_id: {fight_id}")
+                        else:
+                            rows_to_keep.append(row)
+            
+            if not entry_found:
+                print(f"No CSV entry found for fight_id: {fight_id}")
+                return False
+            
+            # Write back the filtered data
+            with open(csv_path, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerows(rows_to_keep)
+            
+            print(f"Successfully removed CSV entry for fight_id: {fight_id}")
+            return True
+            
+        except Exception as e:
+            print(f"Error removing CSV entry: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
         
     def _start_ui_updates(self):
         """Start the UI update loop"""
