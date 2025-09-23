@@ -11,7 +11,6 @@ env.bak/
 venv.bak/
 
 # Data files (actual logging output)
-data/raw/*.jsonl
 data/summaries/
 
 # IDE
