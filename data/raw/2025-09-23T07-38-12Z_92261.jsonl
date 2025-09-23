@@ -1,4 +1,4 @@
-{"fight_id": "2025-09-23T07-38-12Z_92261", "meta": {"boss": "Baroness Von Bon Bon", "loadout": "Peashooter + Smoke Bomb", "difficulty": "Regular", "start_utc": "2025-09-23T07:38:12.261149+00:00"}}
+{"fight_id": "2025-09-23T07-38-12Z_92261", "meta": {"boss": "Grim Matchstick", "loadout": "Peashooter + Smoke Bomb", "difficulty": "Regular", "start_utc": "2025-09-23T07:38:12.261149+00:00"}}
 {"fight_id": "2025-09-23T07-38-12Z_92261", "event": "keydown", "key": "Key.enter", "t_ms": 1580}
 {"fight_id": "2025-09-23T07-38-12Z_92261", "event": "keyup", "key": "Key.enter", "t_ms": 1654}
 {"fight_id": "2025-09-23T07-38-12Z_92261", "event": "keydown", "key": "Key.space", "t_ms": 3049}

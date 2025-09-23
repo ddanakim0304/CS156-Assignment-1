@@ -1,54 +1,54 @@
 fight_id,boss,loadout,difficulty,outcome,duration_s,n_events,recorded_utc
-2025-09-23T06-06-43Z_3469,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,34.237,76,2025-09-23T06:07:17.705082+00:00
-2025-09-23T06-07-27Z_47503,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,29.629,92,2025-09-23T06:07:57.132171+00:00
-2025-09-23T06-08-08Z_88258,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,49.14,176,2025-09-23T06:08:57.417577+00:00
-2025-09-23T06-09-06Z_46464,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,28.889,84,2025-09-23T06:09:35.354153+00:00
-2025-09-23T06-09-42Z_82992,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,49.708,156,2025-09-23T06:10:32.700579+00:002025-09-23T06-33-15Z_95788,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,37.154,100,2025-09-23T06:33:52.942465+00:00
-2025-09-23T06-33-57Z_37869,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,71.513,252,2025-09-23T06:35:09.383825+00:00
-2025-09-23T06-35-15Z_15729,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,71.834,244,2025-09-23T06:36:27.564037+00:00
-2025-09-23T06-36-33Z_93545,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,36.738,106,2025-09-23T06:37:10.283613+00:00
-2025-09-23T06-37-14Z_34755,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,56.759,154,2025-09-23T06:38:11.514940+00:00
-2025-09-23T06-38-17Z_97320,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,71.894,194,2025-09-23T06:39:29.214982+00:00
-2025-09-23T06-39-55Z_95811,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,73.514,224,2025-09-23T06:41:09.325682+00:00
-2025-09-23T06-41-33Z_93388,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,47.082,124,2025-09-23T06:42:20.469937+00:00
-2025-09-23T06-42-25Z_45603,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,55.395,158,2025-09-23T06:43:20.999339+00:00
-2025-09-23T06-43-23Z_3706,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,45.754,132,2025-09-23T06:44:09.461481+00:00
-2025-09-23T06-44-11Z_51958,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,58.687,178,2025-09-23T06:45:10.646994+00:00
-2025-09-23T06-45-15Z_15501,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,30.994,60,2025-09-23T06:45:46.496293+00:00
-2025-09-23T06-49-38Z_78080,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,34.977,92,2025-09-23T06:50:13.056342+00:00
-2025-09-23T06-50-25Z_25540,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,51.247,124,2025-09-23T06:51:16.787969+00:00
-2025-09-23T06-51-20Z_80566,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,57.599,150,2025-09-23T06:52:18.164148+00:00
-2025-09-23T06-52-32Z_52056,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,54.973,144,2025-09-23T06:53:27.029996+00:00
-2025-09-23T06-53-31Z_11825,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,49.131,146,2025-09-23T06:54:20.957041+00:00
-2025-09-23T06-54-23Z_63257,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,82.665,288,2025-09-23T06:55:45.924690+00:00
-2025-09-23T06-56-15Z_75695,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,69.568,222,2025-09-23T06:57:25.263251+00:00
-2025-09-23T06-57-28Z_48610,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,38.165,102,2025-09-23T06:58:06.774532+00:00
-2025-09-23T06-59-30Z_70382,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,45.328,108,2025-09-23T07:00:15.710928+00:00
-2025-09-23T07-00-18Z_18685,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,74.666,224,2025-09-23T07:01:33.352448+00:00
-2025-09-23T07-02-21Z_41103,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,29.096,100,2025-09-23T07:02:50.199215+00:00
-2025-09-23T07-03-28Z_8861,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,72.712,214,2025-09-23T07:04:41.574667+00:00
-2025-09-23T07-05-12Z_12227,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,53.486,148,2025-09-23T07:06:05.712605+00:00
-2025-09-23T07-10-29Z_29471,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,43.955,132,2025-09-23T07:11:13.428121+00:00
-2025-09-23T07-11-16Z_76787,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,78.257,232,2025-09-23T07:12:35.044754+00:00
-2025-09-23T07-13-14Z_94182,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,77.546,254,2025-09-23T07:14:31.729855+00:00
-2025-09-23T07-14-59Z_99286,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,70.604,178,2025-09-23T07:16:09.891695+00:00
-2025-09-23T07-16-35Z_95988,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,49.941,142,2025-09-23T07:17:25.930478+00:00
-2025-09-23T07-18-28Z_8058,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,65.607,237,2025-09-23T07:19:33.667252+00:00
-2025-09-23T07-19-39Z_79580,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,56.157,198,2025-09-23T07:20:35.738131+00:00
-2025-09-23T07-24-37Z_77561,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,75.911,276,2025-09-23T07:25:53.473014+00:00
-2025-09-23T07-27-13Z_33056,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,83.444,246,2025-09-23T07:28:36.500578+00:00
-2025-09-23T07-28-48Z_28438,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,97.562,328,2025-09-23T07:30:26.001504+00:00
-2025-09-23T07-30-52Z_52384,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,44.804,128,2025-09-23T07:31:37.187546+00:00
-2025-09-23T07-31-41Z_1510,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,29.281,46,2025-09-23T07:32:10.791340+00:00
-2025-09-23T07-32-14Z_34050,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,72.52,206,2025-09-23T07:33:26.571468+00:00
-2025-09-23T07-33-30Z_10164,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,59.227,154,2025-09-23T07:34:29.392647+00:00
-2025-09-23T07-34-37Z_77503,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,93.004,302,2025-09-23T07:36:10.507530+00:00
-2025-09-23T07-36-15Z_75956,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,40.547,96,2025-09-23T07:36:56.503879+00:00
-2025-09-23T07-38-12Z_92261,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,84.395,294,2025-09-23T07:39:36.657078+00:00
-2025-09-23T07-40-47Z_47914,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,70.511,198,2025-09-23T07:41:58.426475+00:00
-2025-09-23T07-42-02Z_22093,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,95.107,297,2025-09-23T07:43:37.201218+00:00
-2025-09-23T07-44-20Z_60793,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,94.815,354,2025-09-23T07:45:55.609571+00:00
-2025-09-23T07-47-39Z_59915,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,78.486,286,2025-09-23T07:48:58.402458+00:00
+2025-09-23T06-06-43Z_3469,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,34.237,76,2025-09-23T06:07:17.705082+00:00
+2025-09-23T06-07-27Z_47503,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,29.629,92,2025-09-23T06:07:57.132171+00:00
+2025-09-23T06-08-08Z_88258,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,49.14,176,2025-09-23T06:08:57.417577+00:00
+2025-09-23T06-09-06Z_46464,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,28.889,84,2025-09-23T06:09:35.354153+00:00
+2025-09-23T06-09-42Z_82992,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,49.708,156,2025-09-23T06:10:32.700579+00:002025-09-23T06-33-15Z_95788,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,37.154,100,2025-09-23T06:33:52.942465+00:00
+2025-09-23T06-33-57Z_37869,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,71.513,252,2025-09-23T06:35:09.383825+00:00
+2025-09-23T06-35-15Z_15729,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,71.834,244,2025-09-23T06:36:27.564037+00:00
+2025-09-23T06-36-33Z_93545,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,36.738,106,2025-09-23T06:37:10.283613+00:00
+2025-09-23T06-37-14Z_34755,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,56.759,154,2025-09-23T06:38:11.514940+00:00
+2025-09-23T06-38-17Z_97320,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,71.894,194,2025-09-23T06:39:29.214982+00:00
+2025-09-23T06-39-55Z_95811,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,73.514,224,2025-09-23T06:41:09.325682+00:00
+2025-09-23T06-41-33Z_93388,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,47.082,124,2025-09-23T06:42:20.469937+00:00
+2025-09-23T06-42-25Z_45603,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,55.395,158,2025-09-23T06:43:20.999339+00:00
+2025-09-23T06-43-23Z_3706,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,45.754,132,2025-09-23T06:44:09.461481+00:00
+2025-09-23T06-44-11Z_51958,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,58.687,178,2025-09-23T06:45:10.646994+00:00
+2025-09-23T06-45-15Z_15501,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,30.994,60,2025-09-23T06:45:46.496293+00:00
+2025-09-23T06-49-38Z_78080,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,34.977,92,2025-09-23T06:50:13.056342+00:00
+2025-09-23T06-50-25Z_25540,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,51.247,124,2025-09-23T06:51:16.787969+00:00
+2025-09-23T06-51-20Z_80566,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,57.599,150,2025-09-23T06:52:18.164148+00:00
+2025-09-23T06-52-32Z_52056,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,54.973,144,2025-09-23T06:53:27.029996+00:00
+2025-09-23T06-53-31Z_11825,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,49.131,146,2025-09-23T06:54:20.957041+00:00
+2025-09-23T06-54-23Z_63257,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,82.665,288,2025-09-23T06:55:45.924690+00:00
+2025-09-23T06-56-15Z_75695,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,69.568,222,2025-09-23T06:57:25.263251+00:00
+2025-09-23T06-57-28Z_48610,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,38.165,102,2025-09-23T06:58:06.774532+00:00
+2025-09-23T06-59-30Z_70382,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,45.328,108,2025-09-23T07:00:15.710928+00:00
+2025-09-23T07-00-18Z_18685,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,74.666,224,2025-09-23T07:01:33.352448+00:00
+2025-09-23T07-02-21Z_41103,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,29.096,100,2025-09-23T07:02:50.199215+00:00
+2025-09-23T07-03-28Z_8861,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,72.712,214,2025-09-23T07:04:41.574667+00:00
+2025-09-23T07-05-12Z_12227,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,53.486,148,2025-09-23T07:06:05.712605+00:00
+2025-09-23T07-10-29Z_29471,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,43.955,132,2025-09-23T07:11:13.428121+00:00
+2025-09-23T07-11-16Z_76787,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,78.257,232,2025-09-23T07:12:35.044754+00:00
+2025-09-23T07-13-14Z_94182,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,77.546,254,2025-09-23T07:14:31.729855+00:00
+2025-09-23T07-14-59Z_99286,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,70.604,178,2025-09-23T07:16:09.891695+00:00
+2025-09-23T07-16-35Z_95988,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,49.941,142,2025-09-23T07:17:25.930478+00:00
+2025-09-23T07-18-28Z_8058,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,65.607,237,2025-09-23T07:19:33.667252+00:00
+2025-09-23T07-19-39Z_79580,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,56.157,198,2025-09-23T07:20:35.738131+00:00
+2025-09-23T07-24-37Z_77561,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,75.911,276,2025-09-23T07:25:53.473014+00:00
+2025-09-23T07-27-13Z_33056,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,83.444,246,2025-09-23T07:28:36.500578+00:00
+2025-09-23T07-28-48Z_28438,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,97.562,328,2025-09-23T07:30:26.001504+00:00
+2025-09-23T07-30-52Z_52384,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,44.804,128,2025-09-23T07:31:37.187546+00:00
+2025-09-23T07-31-41Z_1510,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,29.281,46,2025-09-23T07:32:10.791340+00:00
+2025-09-23T07-32-14Z_34050,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,72.52,206,2025-09-23T07:33:26.571468+00:00
+2025-09-23T07-33-30Z_10164,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,59.227,154,2025-09-23T07:34:29.392647+00:00
+2025-09-23T07-34-37Z_77503,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,93.004,302,2025-09-23T07:36:10.507530+00:00
+2025-09-23T07-36-15Z_75956,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,40.547,96,2025-09-23T07:36:56.503879+00:00
+2025-09-23T07-38-12Z_92261,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,84.395,294,2025-09-23T07:39:36.657078+00:00
+2025-09-23T07-40-47Z_47914,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,70.511,198,2025-09-23T07:41:58.426475+00:00
+2025-09-23T07-42-02Z_22093,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,95.107,297,2025-09-23T07:43:37.201218+00:00
+2025-09-23T07-44-20Z_60793,Grim Matchstick,Peashooter + Smoke Bomb,Regular,win,94.815,354,2025-09-23T07:45:55.609571+00:00
+2025-09-23T07-47-39Z_59915,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,78.486,286,2025-09-23T07:48:58.402458+00:00
 2025-09-23T07-50-28Z_28528,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,34.735,116,2025-09-23T07:51:03.262517+00:00
 2025-09-23T07-51-14Z_74918,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,27.9,96,2025-09-23T07:51:42.816741+00:00
 2025-09-23T07-51-45Z_5265,Grim Matchstick,Peashooter + Smoke Bomb,Regular,lose,48.162,162,2025-09-23T07:52:33.428417+00:00

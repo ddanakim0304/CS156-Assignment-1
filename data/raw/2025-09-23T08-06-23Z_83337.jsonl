@@ -1,4 +1,4 @@
-{"fight_id": "2025-09-23T08-06-23Z_83337", "meta": {"boss": "Cagney Carnation", "loadout": "Peashooter + Smoke Bomb", "difficulty": "Regular", "start_utc": "2025-09-23T08:06:23.336909+00:00"}}
+{"fight_id": "2025-09-23T08-06-23Z_83337", "meta": {"boss": "Grim Matchstick", "loadout": "Peashooter + Smoke Bomb", "difficulty": "Regular", "start_utc": "2025-09-23T08:06:23.336909+00:00"}}
 {"fight_id": "2025-09-23T08-06-23Z_83337", "event": "keydown", "key": "Key.space", "t_ms": 4422}
 {"fight_id": "2025-09-23T08-06-23Z_83337", "event": "keydown", "key": "Key.right", "t_ms": 4527}
 {"fight_id": "2025-09-23T08-06-23Z_83337", "event": "keyup", "key": "Key.space", "t_ms": 4570}
