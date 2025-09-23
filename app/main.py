@@ -251,7 +251,7 @@ class CupheadLoggerUI:
             self.end_btn.config(state="disabled")
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
-            self.delete_btn.config(state="normal" if self.session_history else "disabled")
+            self.delete_btn.config(state="normal")
             self.status_var.set("Idle")
             self.events_var.set("Events: 0")
             self.elapsed_var.set("Elapsed: 00:00")
@@ -261,7 +261,7 @@ class CupheadLoggerUI:
             self.end_btn.config(state="normal")
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
-            self.delete_btn.config(state="disabled")
+            self.delete_btn.config(state="normal")
             
             session_info = self.data_logger.get_session_info()
             if session_info:
@@ -274,7 +274,7 @@ class CupheadLoggerUI:
             self.end_btn.config(state="disabled")
             self.lose_btn.config(state="normal")
             self.win_btn.config(state="normal")
-            self.delete_btn.config(state="disabled")
+            self.delete_btn.config(state="normal")
             self.status_var.set("Fight ended. Mark outcome.")
             
     def _update_telemetry(self):
