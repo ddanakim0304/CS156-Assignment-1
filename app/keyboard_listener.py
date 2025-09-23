@@ -14,6 +14,8 @@ class KeyboardListener:
     GAMEPLAY_KEYS = {
         Key.left: 'left',
         Key.right: 'right', 
+        Key.up: 'up',
+        Key.down: 'down', 
         Key.space: 'jump',
         'f': 'shoot',
         'a': 'special',
