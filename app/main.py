@@ -65,6 +65,33 @@ class CupheadLoggerUI:
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
         
+        # Configure button styles for different states
+        style = ttk.Style()
+        
+        # Set theme that supports colors better
+        try:
+            style.theme_use('clam')
+        except:
+            pass  # Fallback to default theme
+            
+        # Configure custom button styles
+        style.configure('Green.TButton', 
+                       foreground='white', 
+                       background='#4CAF50', 
+                       font=('Arial', 12, 'bold'),
+                       padding=(10, 8))
+        style.configure('Red.TButton', 
+                       foreground='white', 
+                       background='#f44336', 
+                       font=('Arial', 12, 'bold'),
+                       padding=(10, 8))
+        
+        # Configure hover effects
+        style.map('Green.TButton', 
+                 background=[('active', '#45a049'), ('pressed', '#3d8b40')])
+        style.map('Red.TButton', 
+                 background=[('active', '#da190b'), ('pressed', '#c41e3a')])
+        
         # Boss selection
         ttk.Label(main_frame, text="Boss:").grid(row=0, column=0, sticky=tk.W, pady=5)
         self.boss_var = tk.StringVar(value="Cagney Carnation")
@@ -101,25 +128,29 @@ class CupheadLoggerUI:
         self.delete_btn = ttk.Button(button_frame, text="Delete Selected", command=self._delete_selected_session)
         self.delete_btn.grid(row=2, column=0, columnspan=2, padx=5, pady=5, sticky=(tk.W, tk.E))
         
-        # Status display
-        self.status_var = tk.StringVar(value="Idle")
-        self.status_label = ttk.Label(main_frame, textvariable=self.status_var, foreground="blue", font=('Arial', 10, 'bold'))
-        self.status_label.grid(row=4, column=0, columnspan=3, pady=10)
+        # Large elapsed time display (most prominent)
+        self.elapsed_var = tk.StringVar(value="00:00")
+        self.elapsed_label = ttk.Label(main_frame, textvariable=self.elapsed_var, 
+                                     font=('Arial', 24, 'bold'), 
+                                     foreground='#2E7D32')
+        self.elapsed_label.grid(row=4, column=0, columnspan=3, pady=15)
         
-        # Telemetry display
-        telemetry_frame = ttk.LabelFrame(main_frame, text="Session Info", padding="10")
+        # Telemetry display (compact)
+        telemetry_frame = ttk.LabelFrame(main_frame, text="Session Stats", padding="8")
         telemetry_frame.grid(row=5, column=0, columnspan=3, pady=10, sticky=(tk.W, tk.E))
         
+        # Compact stats in one row
         self.events_var = tk.StringVar(value="Events: 0")
-        ttk.Label(telemetry_frame, textvariable=self.events_var).grid(row=0, column=0, sticky=tk.W, pady=2)
+        ttk.Label(telemetry_frame, textvariable=self.events_var, font=('Arial', 10)).grid(row=0, column=0, sticky=tk.W, pady=2)
         
-        self.elapsed_var = tk.StringVar(value="Elapsed: 00:00")
-        ttk.Label(telemetry_frame, textvariable=self.elapsed_var).grid(row=0, column=1, sticky=tk.E, pady=2)
+        self.boss_info_var = tk.StringVar(value="")
+        ttk.Label(telemetry_frame, textvariable=self.boss_info_var, font=('Arial', 10)).grid(row=0, column=1, sticky=tk.E, pady=2)
         
-        # Current keystroke display
-        self.keystroke_var = tk.StringVar(value="Last Key: None")
-        self.keystroke_label = ttk.Label(telemetry_frame, textvariable=self.keystroke_var, foreground="green")
-        self.keystroke_label.grid(row=1, column=0, columnspan=2, pady=5)
+        # Current keystroke display (more prominent)
+        self.keystroke_var = tk.StringVar(value="Press F1 to Start")
+        self.keystroke_label = ttk.Label(telemetry_frame, textvariable=self.keystroke_var, 
+                                       font=('Arial', 11, 'bold'), foreground="#666")
+        self.keystroke_label.grid(row=1, column=0, columnspan=2, pady=8)
         
         # Pin on top checkbox
         self.pin_var = tk.BooleanVar(value=True)
@@ -272,17 +303,19 @@ class CupheadLoggerUI:
     def _update_ui_state(self):
         """Update UI elements based on current state"""
         if self.state == AppState.IDLE:
-            self.start_btn.config(state="normal", text="Start (F1)")
+            self.start_btn.config(state="normal", text="🟢 START RECORDING", style="Green.TButton")
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
             self.delete_btn.config(state="normal")
-            self.status_var.set("Idle")
             self.events_var.set("Events: 0")
-            self.elapsed_var.set("Elapsed: 00:00")
-            self.keystroke_var.set("Last Key: None")
+            self.elapsed_var.set("00:00")
+            self.boss_info_var.set("")
+            self.keystroke_var.set("Press F1 to Start Recording")
+            self.keystroke_label.config(foreground="#666")
+            self.elapsed_label.config(foreground="#666")
             
         elif self.state == AppState.RECORDING:
-            self.start_btn.config(state="normal", text="End (F1)")  # Button text changes to "End"
+            self.start_btn.config(state="normal", text="🔴 STOP RECORDING", style="Red.TButton")
             self.lose_btn.config(state="disabled")
             self.win_btn.config(state="disabled")
             self.delete_btn.config(state="normal")
@@ -290,15 +323,17 @@ class CupheadLoggerUI:
             session_info = self.data_logger.get_session_info()
             if session_info:
                 boss = session_info['boss']
-                fight_id = session_info['fight_id']
-                self.status_var.set(f"Recording: {fight_id} — Boss: {boss}")
+                self.boss_info_var.set(f"Boss: {boss}")
+                self.elapsed_label.config(foreground="#d32f2f")  # Red when recording
                 
         elif self.state == AppState.ENDED:
-            self.start_btn.config(state="disabled", text="Start (F1)")  # Reset to "Start" but disabled
+            self.start_btn.config(state="disabled", text="🟢 START RECORDING", style="Green.TButton")
             self.lose_btn.config(state="normal")
             self.win_btn.config(state="normal")
             self.delete_btn.config(state="normal")
-            self.status_var.set("Fight ended. Mark outcome.")
+            self.keystroke_var.set("Fight ended - Mark Win/Loss")
+            self.keystroke_label.config(foreground="#ff9800")
+            self.elapsed_label.config(foreground="#666")
             
     def _update_telemetry(self):
         """Update telemetry display during recording"""
@@ -312,10 +347,13 @@ class CupheadLoggerUI:
                 seconds = (elapsed_ms // 1000) % 60
                 
                 self.events_var.set(f"Events: {events}")
-                self.elapsed_var.set(f"Elapsed: {minutes:02d}:{seconds:02d}")
+                self.elapsed_var.set(f"{minutes:02d}:{seconds:02d}")
     
     def _update_keystroke_display(self, event_type: str, key: str):
         """Update the current keystroke display"""
+        if self.state != AppState.RECORDING:
+            return
+            
         # Cancel any existing timeout
         if self.keystroke_timeout_id:
             self.root.after_cancel(self.keystroke_timeout_id)
@@ -325,14 +363,14 @@ class CupheadLoggerUI:
         
         # Show different colors for press vs release
         if event_type == "keydown":
-            self.keystroke_var.set(f"Last Key: {readable_key} (PRESS)")
-            self.keystroke_label.config(foreground="red")
+            self.keystroke_var.set(f"🔽 {readable_key}")
+            self.keystroke_label.config(foreground="#d32f2f")  # Red for press
         else:  # keyup
-            self.keystroke_var.set(f"Last Key: {readable_key} (RELEASE)")
-            self.keystroke_label.config(foreground="blue")
+            self.keystroke_var.set(f"🔼 {readable_key}")
+            self.keystroke_label.config(foreground="#1976d2")  # Blue for release
         
-        # Set timeout to clear display after 2 seconds
-        self.keystroke_timeout_id = self.root.after(2000, self._clear_keystroke_display)
+        # Set timeout to clear display after 1.5 seconds
+        self.keystroke_timeout_id = self.root.after(1500, self._clear_keystroke_display)
     
     def _format_key_name(self, key: str) -> str:
         """Format key name for better readability"""
@@ -353,8 +391,9 @@ class CupheadLoggerUI:
     
     def _clear_keystroke_display(self):
         """Clear the keystroke display"""
-        self.keystroke_var.set("Last Key: None")
-        self.keystroke_label.config(foreground="gray")
+        if self.state == AppState.RECORDING:
+            self.keystroke_var.set("Recording... (F1 to stop)")
+            self.keystroke_label.config(foreground="#666")
         self.keystroke_timeout_id = None
     
     def _load_existing_sessions(self):
