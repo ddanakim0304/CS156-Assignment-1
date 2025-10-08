@@ -163,4 +163,75 @@ fight_id,boss,loadout,difficulty,outcome,duration_s,n_events,recorded_utc
 2025-09-27T07-31-33Z_93634,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,65.001,192,2025-09-27T07:32:38.634501+00:00
 2025-09-27T07-33-06Z_86628,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,62.005,178,2025-09-27T07:34:08.633881+00:00
 2025-09-27T07-34-34Z_74793,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,52.528,172,2025-09-27T07:35:27.324289+00:00
-2025-09-27T07-35-30Z_30624,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,31.498,74,2025-09-27T07:36:02.121781+00:00
+2025-09-27T07-35-30Z_30624,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,31.498,74,2025-09-27T07:36:02.121781+00:002025-09-29T11-52-56Z_76418,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,60.925,164,2025-09-29T11:53:57.346359+00:00
+2025-09-29T11-53-59Z_39406,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,42.008,136,2025-09-29T11:54:41.415222+00:00
+2025-09-29T11-54-42Z_82812,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,67.422,224,2025-09-29T11:55:50.235527+00:00
+2025-09-29T11-56-20Z_80959,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,50.056,166,2025-09-29T11:57:11.016101+00:00
+2025-09-29T11-57-15Z_35481,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,32.309,120,2025-09-29T11:57:47.791615+00:00
+2025-09-29T11-57-52Z_72448,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,43.328,142,2025-09-29T11:58:35.776803+00:00
+2025-09-29T11-58-38Z_18706,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,29.606,66,2025-09-29T11:59:08.312704+00:00
+2025-09-29T12-18-15Z_95822,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,26.5,58,2025-09-29T12:18:42.324775+00:00
+2025-09-29T12-18-43Z_23875,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,26.29,88,2025-09-29T12:19:10.165528+00:00
+2025-09-29T12-19-16Z_56319,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,19.976,88,2025-09-29T12:19:36.296564+00:00
+2025-09-29T12-19-40Z_80695,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,40.413,124,2025-09-29T12:20:21.108970+00:00
+2025-09-29T12-20-24Z_24299,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,20.099,74,2025-09-29T12:20:44.398587+00:00
+2025-09-29T12-20-46Z_46111,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,29.639,98,2025-09-29T12:21:15.751297+00:00
+2025-09-29T12-21-17Z_77731,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,71.114,230,2025-09-29T12:22:28.847509+00:00
+2025-09-29T12-22-54Z_74000,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,69.26,230,2025-09-29T12:24:03.261159+00:00
+2025-09-29T12-24-30Z_70563,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,61.653,220,2025-09-29T12:25:32.215328+00:00
+2025-09-29T12-26-02Z_62712,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,62.743,130,2025-09-29T12:27:05.456502+00:00
+2025-09-29T12-27-06Z_26718,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,49.171,162,2025-09-29T12:27:55.888772+00:00
+2025-09-29T12-27-59Z_79432,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,70.39,186,2025-09-29T12:29:09.824165+00:00
+2025-09-29T12-29-12Z_52050,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,37.568,88,2025-09-29T12:29:49.620110+00:00
+2025-09-29T12-29-51Z_91044,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,15.454,38,2025-09-29T12:30:06.499747+00:00
+2025-09-29T12-30-08Z_8276,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,33.892,114,2025-09-29T12:30:42.168896+00:00
+2025-09-29T12-30-44Z_44223,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,50.251,118,2025-09-29T12:31:34.475201+00:00
+2025-09-29T12-31-36Z_96334,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,42.015,136,2025-09-29T12:32:18.350209+00:00
+2025-09-29T12-32-20Z_40789,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,87.178,276,2025-09-29T12:33:47.969142+00:00
+2025-09-29T12-33-52Z_32416,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,57.871,162,2025-09-29T12:34:50.289229+00:00
+2025-09-29T12-34-52Z_92482,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,87.463,242,2025-09-29T12:36:19.947734+00:00
+2025-09-29T12-36-22Z_82093,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,76.394,196,2025-09-29T12:37:38.489143+00:00
+2025-09-29T12-37-41Z_61124,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,86.422,258,2025-09-29T12:39:07.547699+00:00
+2025-09-29T12-39-37Z_77943,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,94.466,308,2025-09-29T12:41:12.410352+00:00
+2025-09-29T12-41-43Z_3196,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,87.476,258,2025-09-29T12:43:10.673473+00:00
+2025-09-29T12-43-40Z_20620,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,75.147,184,2025-09-29T12:44:55.768317+00:00
+2025-09-29T12-44-58Z_98302,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,80.176,210,2025-09-29T12:46:18.479607+00:00
+2025-09-29T12-46-22Z_82129,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,44.665,132,2025-09-29T12:47:06.795720+00:00
+2025-09-29T12-47-09Z_29826,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,89.64,272,2025-09-29T12:48:39.468150+00:00
+2025-09-29T12-48-43Z_23247,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,47.296,112,2025-09-29T12:49:30.547253+00:00
+2025-09-29T12-49-32Z_72284,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,61.44,190,2025-09-29T12:50:33.725564+00:00
+2025-09-29T12-50-35Z_35978,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,60.148,176,2025-09-29T12:51:36.128188+00:00
+2025-09-29T12-51-38Z_98183,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,75.871,206,2025-09-29T12:52:54.056140+00:00
+2025-09-29T12-52-58Z_78534,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,84.793,252,2025-09-29T12:54:23.325210+00:00
+2025-09-29T12-54-26Z_66166,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,69.052,192,2025-09-29T12:55:35.219950+00:00
+2025-09-29T12-55-38Z_38864,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,39.421,118,2025-09-29T12:56:18.286965+00:00
+2025-09-29T12-56-20Z_80724,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,54.637,158,2025-09-29T12:57:15.362124+00:00
+2025-09-29T12-57-18Z_38611,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,98.032,308,2025-09-29T12:58:56.644391+00:00
+2025-10-04T13-26-52Z_12286,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,86.716,262,2025-10-04T13:28:19.023838+00:00
+2025-10-04T13-28-22Z_2255,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,76.268,186,2025-10-04T13:29:38.526849+00:00
+2025-10-04T13-30-54Z_54522,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,106.323,356,2025-10-04T13:32:40.847336+00:00
+2025-10-04T13-32-44Z_64660,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,83.937,232,2025-10-04T13:34:08.599582+00:00
+2025-10-04T13-34-36Z_76989,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,99.576,346,2025-10-04T13:36:16.568084+00:00
+2025-10-04T13-37-24Z_44570,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,80.196,244,2025-10-04T13:38:44.767984+00:00
+2025-10-04T13-38-46Z_26817,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,58.999,120,2025-10-04T13:39:45.818048+00:00
+2025-10-04T13-39-52Z_92417,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,win,94.0,387,2025-10-04T13:41:26.420544+00:00
+2025-10-04T13-42-00Z_20493,Baroness Von Bon Bon,Peashooter + Smoke Bomb,Regular,lose,60.776,136,2025-10-04T13:43:01.269385+00:00
+2025-10-04T13-43-25Z_5172,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,67.598,208,2025-10-04T13:44:32.770118+00:00
+2025-10-04T13-44-35Z_75068,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,31.903,76,2025-10-04T13:45:06.971257+00:00
+2025-10-04T13-45-09Z_9068,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,64.286,184,2025-10-04T13:46:13.356412+00:00
+2025-10-04T13-46-16Z_76186,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,49.318,168,2025-10-04T13:47:05.505276+00:00
+2025-10-04T13-47-08Z_28186,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,49.717,162,2025-10-04T13:47:57.904344+00:00
+2025-10-04T13-48-02Z_82320,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,42.835,110,2025-10-04T13:48:45.156708+00:00
+2025-10-04T13-48-47Z_27004,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,38.302,106,2025-10-04T13:49:25.307059+00:00
+2025-10-04T13-49-27Z_67487,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,63.202,214,2025-10-04T13:50:30.690987+00:00
+2025-10-04T13-50-32Z_32639,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,77.217,244,2025-10-04T13:51:49.859166+00:00
+2025-10-04T13-52-51Z_71379,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,75.963,246,2025-10-04T13:54:07.344887+00:00
+2025-10-04T13-54-09Z_49611,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,62.147,172,2025-10-04T13:55:11.759379+00:00
+2025-10-04T13-55-15Z_15009,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,51.699,188,2025-10-04T13:56:06.709351+00:00
+2025-10-04T13-56-08Z_68675,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,64.868,182,2025-10-04T13:57:13.546244+00:00
+2025-10-04T13-57-50Z_70630,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,53.966,182,2025-10-04T13:58:44.598384+00:00
+2025-10-04T13-58-46Z_26295,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,62.152,154,2025-10-04T13:59:48.449450+00:00
+2025-10-04T13-59-50Z_90630,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,69.885,210,2025-10-04T14:01:00.516920+00:00
+2025-10-04T14-01-24Z_84595,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,50.318,162,2025-10-04T14:02:14.914419+00:00
+2025-10-04T14-02-16Z_36647,Cagney Carnation,Peashooter + Smoke Bomb,Regular,lose,24.585,74,2025-10-04T14:02:41.232069+00:00
+2025-10-04T14-02-43Z_63162,Cagney Carnation,Peashooter + Smoke Bomb,Regular,win,72.435,194,2025-10-04T14:03:55.600318+00:00
