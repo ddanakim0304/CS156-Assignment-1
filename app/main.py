@@ -9,6 +9,7 @@ import time
 import csv
 from pathlib import Path
 from enum import Enum
+from collections import defaultdict
 
 from data_logger import DataLogger
 from keyboard_listener import KeyboardListener
@@ -47,15 +48,19 @@ class CupheadLoggerUI:
         # Keystroke display timeout
         self.keystroke_timeout_id = None
         
+        # Boss fight counts cache
+        self.boss_fight_counts = {}
+        
         # Create UI elements
         self._create_widgets()
         self._setup_keyboard_listener()
         self._load_existing_sessions()  # Load existing sessions from CSV
+        self._update_boss_counts()  # Load boss fight counts
         self._update_ui_state()
         
         # Start UI update loop
         self._start_ui_updates()
-        
+    
     def _create_widgets(self):
         """Create all UI widgets"""
         main_frame = ttk.Frame(self.root, padding="15")
@@ -225,11 +230,12 @@ class CupheadLoggerUI:
     def _start_fight(self):
         """Start a new fight session"""
         if self.state != AppState.IDLE:
-            self.status_var.set("Warning: End current fight first!")
+            # Remove this line since status_var doesn't exist
+            # self.status_var.set("Warning: End current fight first!")
             return
             
         try:
-            boss = self.boss_var.get()
+            boss = self._extract_boss_name(self.boss_var.get())  # Extract actual boss name
             loadout = self.loadout_var.get()
             difficulty = self.difficulty_var.get()
             
@@ -240,7 +246,8 @@ class CupheadLoggerUI:
             print(f"Started fight: {fight_id}")
             
         except Exception as e:
-            self.status_var.set(f"Error starting fight: {str(e)}")
+            # Remove this line since status_var doesn't exist
+            # self.status_var.set(f"Error starting fight: {str(e)}")
             print(f"Error starting fight: {e}")
             
     def _end_fight(self):
@@ -291,15 +298,18 @@ class CupheadLoggerUI:
             
             self._add_to_history(session_entry)
             
+            # Update boss counts after completing a fight
+            self._update_boss_counts()
+            
             print(f"Completed fight {fight_id}: {outcome} ({duration:.1f}s, {events} events)")
             
         except Exception as e:
-            # Show error in status instead of popup
-            self.status_var.set(f"Error: {str(e)}")
+            # Remove this line since status_var doesn't exist
+            # self.status_var.set(f"Error: {str(e)}")
             print(f"Error completing fight: {e}")
             self.state = AppState.IDLE
             self._update_ui_state()
-            
+
     def _update_ui_state(self):
         """Update UI elements based on current state"""
         if self.state == AppState.IDLE:
@@ -481,11 +491,11 @@ class CupheadLoggerUI:
         # Get selected item from treeview
         selected_items = self.history_tree.selection()
         if not selected_items:
-            self.status_var.set("No session selected to delete")
+            print("No session selected to delete")
             return
             
         if self.state != AppState.IDLE:
-            self.status_var.set("Cannot delete while recording")
+            print("Cannot delete while recording")
             return
             
         try:
@@ -495,7 +505,7 @@ class CupheadLoggerUI:
             
             # Get the corresponding session from our history
             if item_index >= len(self.session_history):
-                self.status_var.set("Invalid selection")
+                print("Invalid selection")
                 return
                 
             selected_session = self.session_history[item_index]
@@ -520,63 +530,78 @@ class CupheadLoggerUI:
             self.session_history.pop(item_index)
             self._update_history_display()
             
+            # Update boss counts after deletion
+            self._update_boss_counts()
+            
             if csv_removed:
-                self.status_var.set(f"Deleted session: {fight_id}")
+                print(f"Deleted session: {fight_id}")
             else:
-                self.status_var.set(f"Partially deleted: {fight_id} (CSV entry not found)")
+                print(f"Partially deleted: {fight_id} (CSV entry not found)")
             
             print(f"Successfully processed deletion for: {fight_id}")
             
         except Exception as e:
-            self.status_var.set(f"Error deleting session: {str(e)}")
+            print(f"Error deleting session: {str(e)}")
             print(f"Error deleting session: {e}")
             import traceback
             traceback.print_exc()
             
-    def _remove_from_csv_summary(self, fight_id: str) -> bool:
-        """Remove a fight from the CSV summary file. Returns True if entry was found and removed."""
+    def _count_boss_fights(self):
+        """Count total fights for each boss from CSV data"""
         csv_path = self.data_logger.summaries_dir / "fight_summaries.csv"
-        if not csv_path.exists():
-            print(f"CSV file not found: {csv_path}")
-            return False
-            
-        try:
-            # Read all rows except the one to delete
-            rows_to_keep = []
-            entry_found = False
-            
-            with open(csv_path, 'r', newline='') as f:
-                reader = csv.reader(f)
-                header = next(reader, None)
-                if header:
-                    rows_to_keep.append(header)
-                    
-                for row in reader:
-                    if row and len(row) > 0:
-                        if row[0] == fight_id:  # fight_id is in first column
-                            entry_found = True
-                            print(f"Found CSV entry for fight_id: {fight_id}")
-                        else:
-                            rows_to_keep.append(row)
-            
-            if not entry_found:
-                print(f"No CSV entry found for fight_id: {fight_id}")
-                return False
-            
-            # Write back the filtered data
-            with open(csv_path, 'w', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerows(rows_to_keep)
-            
-            print(f"Successfully removed CSV entry for fight_id: {fight_id}")
-            return True
-            
-        except Exception as e:
-            print(f"Error removing CSV entry: {e}")
-            import traceback
-            traceback.print_exc()
-            return False
+        boss_counts = defaultdict(int)
         
+        if not csv_path.exists():
+            return boss_counts
+        
+        try:
+            with open(csv_path, 'r') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    boss = row['boss']
+                    boss_counts[boss] += 1
+        except Exception as e:
+            print(f"Error counting boss fights: {e}")
+        
+        return dict(boss_counts)
+    
+    def _update_boss_counts(self):
+        """Update the boss fight counts and refresh the combo box"""
+        self.boss_fight_counts = self._count_boss_fights()
+        self._refresh_boss_combo()
+    
+    def _refresh_boss_combo(self):
+        """Refresh the boss combo box with updated fight counts"""
+        bosses = self.data_logger.config.get('bosses', [])
+        boss_options = []
+        
+        for boss in bosses:
+            count = self.boss_fight_counts.get(boss, 0)
+            boss_options.append(f"{boss} ({count} fights)")
+        
+        # Store current selection to restore it
+        current_boss = self._extract_boss_name(self.boss_var.get())
+        
+        # Update combo box values
+        self.boss_combo['values'] = boss_options
+        
+        # Restore selection if possible
+        for option in boss_options:
+            if option.startswith(current_boss):
+                self.boss_var.set(option)
+                break
+        else:
+            # If current boss not found, set to first option
+            if boss_options:
+                self.boss_var.set(boss_options[0])
+    
+    def _extract_boss_name(self, display_text):
+        """Extract the actual boss name from the display text (removes count)"""
+        # Remove the count part like " (5 fights)"
+        if '(' in display_text:
+            return display_text.split(' (')[0]
+        return display_text
+    
     def _start_ui_updates(self):
         """Start the UI update loop"""
         self.update_thread_running = True
