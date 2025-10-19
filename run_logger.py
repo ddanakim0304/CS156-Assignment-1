@@ -26,6 +26,13 @@ def main():
     print("Cuphead Boss Keystroke Logger")
     print("=============================")
     
+    # Check for --new-dataset flag
+    use_new_dataset = '--new-dataset' in sys.argv
+    if use_new_dataset:
+        print("Using NEW dataset (raw_new / fight_summaries_new.csv)")
+    else:
+        print("Using default dataset (raw / fight_summaries.csv)")
+    
     # Check dependencies
     if not check_dependencies():
         sys.exit(1)
@@ -44,7 +51,7 @@ def main():
         print("Note: On macOS, you may need to grant Accessibility permissions.")
         print("Press Ctrl+C to exit.")
         
-        app = CupheadLoggerUI()
+        app = CupheadLoggerUI(use_new_dataset=use_new_dataset)
         app.run()
         
     except KeyboardInterrupt:

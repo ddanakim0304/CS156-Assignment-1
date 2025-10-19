@@ -36,7 +36,12 @@ A data collection tool for recording keystrokes during Cuphead boss fights. This
 1. **Launch the application:**
    ```bash
    python run_logger.py
+   
+   # Or use the new dataset
+   python run_logger.py --new-dataset
    ```
+   
+   See [NEW_DATASET_USAGE.md](NEW_DATASET_USAGE.md) for details on using separate datasets.
 
 2. **Basic workflow:**
    - Select boss from dropdown

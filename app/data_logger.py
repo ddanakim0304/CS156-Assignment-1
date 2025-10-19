@@ -34,11 +34,12 @@ class FightSession:
 class DataLogger:
     """Handles all data logging operations"""
     
-    def __init__(self, data_dir: Path = None):
+    def __init__(self, data_dir: Path = None, raw_subdir: str = "raw", csv_filename: str = "fight_summaries.csv"):
         self.data_dir = data_dir or Path(__file__).parent.parent / "data"
-        self.raw_dir = self.data_dir / "raw"
+        self.raw_dir = self.data_dir / raw_subdir
         self.summaries_dir = self.data_dir / "summaries"
         self.meta_dir = self.data_dir / "meta"
+        self.csv_filename = csv_filename
         
         # Ensure directories exist
         self.raw_dir.mkdir(parents=True, exist_ok=True)
@@ -166,7 +167,7 @@ class DataLogger:
     
     def _write_csv_summary(self, outcome: str, duration_ms: int, end_utc: str):
         """Write fight summary to CSV"""
-        csv_path = self.summaries_dir / "fight_summaries.csv"
+        csv_path = self.summaries_dir / self.csv_filename
         
         # Check if file exists and has header
         write_header = not csv_path.exists()

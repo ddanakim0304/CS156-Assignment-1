@@ -160,8 +160,17 @@ def plot_eda_visualizations(df: pd.DataFrame):
 
 # This block allows you to run the script directly for testing
 if __name__ == '__main__':
-    # Define the path to your data directory
-    data_path = Path("./data/raw")
+    import sys
+    
+    # Check for --new-dataset flag to use new dataset
+    use_new_dataset = '--new-dataset' in sys.argv
+    
+    if use_new_dataset:
+        data_path = Path("./data/raw_new")
+        print("Using NEW dataset from: data/raw_new")
+    else:
+        data_path = Path("./data/raw")
+        print("Using default dataset from: data/raw")
     
     # 1. Load the data
     all_fights_data = load_fight_data(data_path)

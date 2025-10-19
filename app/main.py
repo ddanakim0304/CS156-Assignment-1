@@ -24,7 +24,7 @@ class AppState(Enum):
 class CupheadLoggerUI:
     """Main UI application for Cuphead keystroke logging"""
     
-    def __init__(self):
+    def __init__(self, use_new_dataset: bool = False):
         self.root = tk.Tk()
         self.root.title("Cuphead Boss Keystroke Logger")
         self.root.geometry("500x600")  # Much larger window
@@ -36,7 +36,11 @@ class CupheadLoggerUI:
         
         # Initialize state
         self.state = AppState.IDLE
-        self.data_logger = DataLogger()
+        # Use new dataset paths if specified
+        if use_new_dataset:
+            self.data_logger = DataLogger(raw_subdir="raw_new", csv_filename="fight_summaries_new.csv")
+        else:
+            self.data_logger = DataLogger()
         self.keyboard_listener = None
         
         # UI update thread control
@@ -408,7 +412,7 @@ class CupheadLoggerUI:
     
     def _load_existing_sessions(self):
         """Load existing sessions from CSV file to populate the history"""
-        csv_path = self.data_logger.summaries_dir / "fight_summaries.csv"
+        csv_path = self.data_logger.summaries_dir / self.data_logger.csv_filename
         if not csv_path.exists():
             return
         
@@ -545,10 +549,49 @@ class CupheadLoggerUI:
             print(f"Error deleting session: {e}")
             import traceback
             traceback.print_exc()
+    
+    def _remove_from_csv_summary(self, fight_id: str) -> bool:
+        """Remove a fight from the CSV summary file"""
+        csv_path = self.data_logger.summaries_dir / self.data_logger.csv_filename
+        
+        if not csv_path.exists():
+            return False
+        
+        try:
+            # Read all rows except the one to delete
+            rows_to_keep = []
+            found = False
+            
+            with open(csv_path, 'r', newline='') as f:
+                reader = csv.DictReader(f)
+                fieldnames = reader.fieldnames
+                
+                for row in reader:
+                    if row['fight_id'] == fight_id:
+                        found = True
+                        print(f"Found fight_id in CSV: {fight_id}")
+                    else:
+                        rows_to_keep.append(row)
+            
+            # Rewrite the CSV without the deleted row
+            if found:
+                with open(csv_path, 'w', newline='') as f:
+                    writer = csv.DictWriter(f, fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerows(rows_to_keep)
+                print(f"Rewrote CSV with {len(rows_to_keep)} rows")
+            
+            return found
+            
+        except Exception as e:
+            print(f"Error removing from CSV: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
             
     def _count_boss_fights(self):
         """Count total fights for each boss from CSV data"""
-        csv_path = self.data_logger.summaries_dir / "fight_summaries.csv"
+        csv_path = self.data_logger.summaries_dir / self.data_logger.csv_filename
         boss_counts = defaultdict(int)
         
         if not csv_path.exists():
